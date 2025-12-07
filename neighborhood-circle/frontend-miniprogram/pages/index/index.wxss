@@ -1,66 +1,128 @@
 .container {
-  padding: 20rpx;
-  background-color: #f6f6f6;
+  padding-bottom: 20rpx;
+  background-color: #f8f8f8;
   min-height: 100vh;
 }
 
-.task-item {
+.location-header {
+  padding: 20rpx 30rpx;
   background: #fff;
-  border-radius: 12rpx;
-  padding: 20rpx;
-  margin-bottom: 20rpx;
-  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.05);
-}
-
-.task-header {
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 10rpx;
-}
-
-.task-title {
-  font-size: 32rpx;
+  align-items: center;
   font-weight: bold;
   color: #333;
 }
 
-.task-price {
-  font-size: 32rpx;
-  font-weight: bold;
-  color: #e64340;
-}
+.location-icon { margin-right: 10rpx; }
 
-.task-desc {
-  font-size: 28rpx;
-  color: #666;
-  margin-bottom: 20rpx;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+.map-area {
+  height: 300rpx;
+  background: #e0e0e0;
+  position: relative;
   overflow: hidden;
 }
 
-.task-footer {
+.map-placeholder {
+  width: 100%;
+  height: 100%;
+  background: #cceeff; /* Mock Map Color */
   display: flex;
   align-items: center;
+  justify-content: center;
+  color: #005577;
+  font-weight: bold;
+  position: relative;
+}
+
+.pin {
+  position: absolute;
+  font-size: 30rpx;
+  background: #fff;
+  border-radius: 50%;
+  padding: 5rpx;
+  box-shadow: 0 2rpx 5rpx rgba(0,0,0,0.2);
+}
+
+.service-grid {
+  display: flex;
+  justify-content: space-around;
+  background: #fff;
+  padding: 30rpx 0;
+  margin-bottom: 20rpx;
+}
+
+.grid-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 24rpx;
+  color: #333;
+}
+
+.icon {
+  width: 80rpx;
+  height: 80rpx;
+  background: #f0f9ff;
+  border-radius: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40rpx;
+  margin-bottom: 10rpx;
+}
+
+.section-title {
+  padding: 20rpx 30rpx;
+  font-weight: bold;
+  font-size: 32rpx;
+  color: #333;
+}
+
+/* Task List Updates */
+.task-list { padding: 0 20rpx; }
+
+.task-item {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.03);
+}
+
+.task-type {
+  width: 80rpx;
+  height: 80rpx;
+  background: #eee;
+  border-radius: 12rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20rpx;
+  margin-right: 20rpx;
+  text-transform: capitalize;
+  font-weight: bold;
+}
+.tag-express { background: #e6f7ff; color: #1890ff; }
+.tag-professional { background: #fff7e6; color: #fa8c16; }
+
+.task-content { flex: 1; }
+
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15rpx;
+}
+
+.task-title { font-size: 30rpx; font-weight: bold; }
+.task-price { color: #fe2c55; font-weight: bold; font-size: 30rpx; }
+
+.task-meta {
   font-size: 24rpx;
   color: #999;
 }
-
-.avatar {
-  width: 40rpx;
-  height: 40rpx;
-  border-radius: 50%;
-  margin-right: 10rpx;
-}
-
-.nickname {
-  margin-right: auto;
-}
-
-.tag-pending { color: #07c160; }
-.tag-claimed { color: #ff9900; }
-.tag-completed { color: #999; }
+.separator { margin: 0 10rpx; color: #ddd; }
 
 .floating-btn {
   position: fixed;

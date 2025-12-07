@@ -15,4 +15,7 @@ type User struct {
 	Nickname  string         `json:"nickname"`
 	AvatarURL string         `json:"avatar_url"`
 	Balance   float64        `gorm:"default:0" json:"balance"`
+	Level     int            `gorm:"default:1" json:"level"`
+	Experience int           `gorm:"default:0" json:"experience"`
+	Reputation float64       `gorm:"default:100.0" json:"reputation"`
 }

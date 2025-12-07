@@ -12,6 +12,7 @@ func SetupRouter(db *gorm.DB) *gin.Engine {
 
 	authHandler := &handlers.AuthHandler{DB: db}
 	taskHandler := &handlers.TaskHandler{DB: db}
+	userHandler := &handlers.UserHandler{DB: db}
 
 	// API V1 Group
 	v1 := r.Group("/api/v1")
@@ -22,7 +23,8 @@ func SetupRouter(db *gorm.DB) *gin.Engine {
 			auth.POST("/wechat-login", authHandler.WechatLogin)
 		}
 
-		// Public Routes (if any)
+		// Public Routes
+		v1.GET("/leaderboard", userHandler.GetLeaderboard)
 		
 		// Protected Routes
 		protected := v1.Group("/")
@@ -36,8 +38,8 @@ func SetupRouter(db *gorm.DB) *gin.Engine {
 				tasks.GET("/:id", taskHandler.GetTaskDetail)
 			}
 			
-			// User Routes (Example)
-			// protected.GET("/user/profile", userHandler.GetProfile)
+			// User Routes
+			protected.GET("/user/profile", userHandler.GetUserProfile)
 		}
 	}
 

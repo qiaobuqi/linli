@@ -1,19 +1,60 @@
 <view class="container">
+  <!-- 1. Location Header -->
+  <view class="location-header">
+    <text class="location-icon">📍</text>
+    <text class="location-text">Sunshine Garden Community</text>
+  </view>
+
+  <!-- 2. Mock Map Area -->
+  <view class="map-area">
+    <view class="map-placeholder">
+       <text>Map View (Interactive)</text>
+       <view class="nearby-pins">
+         <view class="pin" style="top:30%;left:40%">⚡</view>
+         <view class="pin" style="top:50%;left:60%">🛠️</view>
+       </view>
+    </view>
+  </view>
+
+  <!-- 3. Service Categories Grid -->
+  <view class="service-grid">
+    <view class="grid-item">
+      <view class="icon">🏃</view>
+      <text>Express</text>
+    </view>
+    <view class="grid-item">
+      <view class="icon">🛠️</view>
+      <text>Repair</text>
+    </view>
+    <view class="grid-item">
+      <view class="icon">🐶</view>
+      <text>Pet Care</text>
+    </view>
+    <view class="grid-item">
+      <view class="icon">🧹</view>
+      <text>Clean</text>
+    </view>
+  </view>
+
+  <!-- 4. Nearby Tasks List -->
+  <view class="section-title">Nearby Tasks</view>
   <block wx:if="{{loading}}">
-    <view class="loading">Loading...</view>
+    <view class="loading">Loading nearby...</view>
   </block>
   <block wx:else>
     <view class="task-list">
       <view class="task-item" wx:for="{{tasks}}" wx:key="id" bindtap="goToDetail" data-id="{{item.id}}">
-        <view class="task-header">
-          <text class="task-title">{{item.title}}</text>
-          <text class="task-price">¥{{item.price}}</text>
-        </view>
-        <view class="task-desc">{{item.description}}</view>
-        <view class="task-footer">
-          <image class="avatar" src="{{item.creator.avatar_url}}"></image>
-          <text class="nickname">{{item.creator.nickname}}</text>
-          <text class="status tag-{{item.status}}">{{item.status}}</text>
+        <view class="task-type tag-{{item.type}}">{{item.type}}</view>
+        <view class="task-content">
+            <view class="task-header">
+            <text class="task-title">{{item.title}}</text>
+            <text class="task-price">¥{{item.price}}</text>
+            </view>
+            <view class="task-meta">
+               <text>{{item.distance || '0.5km'}}</text>
+               <text class="separator">|</text>
+               <text>Lv.{{item.creator.level}} Host</text>
+            </view>
         </view>
       </view>
     </view>

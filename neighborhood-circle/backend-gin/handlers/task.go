@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 	"neighborhood-circle/models"
+	"neighborhood-circle/utils"
 )
 
 type TaskHandler struct {
@@ -34,10 +35,29 @@ func (h *TaskHandler) CreateTask(c *gin.Context) {
 }
 
 func (h *TaskHandler) GetTasks(c *gin.Context) {
+	latStr := c.Query("lat")
+	lonStr := c.Query("long")
+	
 	var tasks []models.Task
-	// Simple pagination can be added here
-	if err := h.DB.Preload("Creator").Preload("Executor").Find(&tasks).Error; err != nil {
+	query := h.DB.Preload("Creator").Preload("Executor")
+
+	if err := query.Find(&tasks).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch tasks"})
+		return
+	}
+
+	// Simple in-memory filtering for demo (production should use PostGIS)
+	if latStr != "" && lonStr != "" {
+		lat, _ := strconv.ParseFloat(latStr, 64)
+		lon, _ := strconv.ParseFloat(lonStr, 64)
+		var nearbyTasks []models.Task
+		for _, task := range tasks {
+			// Filter 5km radius
+			if utils.CalculateDistance(lat, lon, task.Latitude, task.Longitude) <= 5.0 {
+				nearbyTasks = append(nearbyTasks, task)
+			}
+		}
+		c.JSON(http.StatusOK, nearbyTasks)
 		return
 	}
 

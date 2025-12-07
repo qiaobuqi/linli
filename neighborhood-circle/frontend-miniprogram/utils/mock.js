@@ -6,7 +6,10 @@ export const mocks = {
             description: 'Need someone to walk my golden retriever for 30 mins.',
             price: 20.0,
             status: 'pending',
-            creator: { nickname: 'Alice', avatar_url: 'https://placekitten.com/50/50' }
+            type: 'express',
+            latitude: 31.2310,
+            longitude: 121.4740,
+            creator: { nickname: 'Alice', avatar_url: 'https://placekitten.com/50/50', level: 2 }
         },
         {
             id: 2,
@@ -14,7 +17,10 @@ export const mocks = {
             description: 'Kitchen tap is leaking, need a plumber.',
             price: 150.0,
             status: 'claimed',
-            creator: { nickname: 'Bob', avatar_url: 'https://placekitten.com/51/51' }
+            type: 'professional',
+            latitude: 31.2290,
+            longitude: 121.4700,
+            creator: { nickname: 'Bob', avatar_url: 'https://placekitten.com/51/51', level: 5 }
         }
     ],
     'GET /api/v1/tasks/1': {

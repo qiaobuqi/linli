@@ -2,7 +2,10 @@
   <view class="user-header">
     <block wx:if="{{hasUserInfo}}">
       <image class="avatar" src="{{userInfo.avatar_url || userInfo.avatarUrl}}"></image>
-      <text class="nickname">{{userInfo.nickname || userInfo.nickName}}</text>
+      <view class="user-info-text">
+        <text class="nickname">{{userInfo.nickname || userInfo.nickName}}</text>
+        <view class="level-badge">Lv.{{userInfo.level || 1}} ({{userInfo.experience || 0}} XP)</view>
+      </view>
     </block>
     <block wx:else>
       <button class="btn-login" bindtap="handleLogin">Login with WeChat</button>

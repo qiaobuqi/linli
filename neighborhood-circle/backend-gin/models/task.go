@@ -23,6 +23,11 @@ type Task struct {
 	Description string         `json:"description"`
 	Price       float64        `json:"price"`
 	Status      TaskStatus     `gorm:"default:'pending'" json:"status"`
+	Type        string         `json:"type"` // express, professional, etc.
+	Latitude    float64        `json:"latitude"`
+	Longitude   float64        `json:"longitude"`
+	Urgency     bool           `json:"urgency"`
+	ViewCount   int            `json:"view_count"`
 	CreatorID   uint           `json:"creator_id"`
 	Creator     User           `gorm:"foreignKey:CreatorID" json:"creator"`
 	ExecutorID  *uint          `json:"executor_id"` // Nullable

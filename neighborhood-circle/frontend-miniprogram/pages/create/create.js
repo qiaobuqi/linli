@@ -4,7 +4,15 @@ Page({
     data: {
         title: '',
         description: '',
-        price: ''
+        price: '',
+        type: 'express', // Default type
+        types: ['express', 'professional', 'emergency']
+    },
+
+    handleTypeChange(e) {
+        this.setData({
+            type: this.data.types[e.detail.value]
+        });
     },
 
     handleInput(e) {
@@ -15,11 +23,15 @@ Page({
     },
 
     submitForm() {
-        const { title, description, price } = this.data;
+        const { title, description, price, type } = this.data;
         if (!title || !price) {
             wx.showToast({ title: 'Please fill required fields', icon: 'none' });
             return;
         }
+
+        // Mock GPS
+        const mockLat = 31.2304;
+        const mockLong = 121.4737;
 
         request({
             url: '/tasks',
@@ -27,7 +39,11 @@ Page({
             data: {
                 title,
                 description,
-                price: parseFloat(price)
+                price: parseFloat(price),
+                type,
+                latitude: mockLat,
+                longitude: mockLong,
+                urgency: false
             }
         }).then(res => {
             wx.showToast({ title: 'Created!', icon: 'success' });

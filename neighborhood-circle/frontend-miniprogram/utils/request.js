@@ -25,16 +25,27 @@ export const request = (options) => {
             console.log(`[Mock] Not found for ${key}, falling back to network if possible or rejecting`);
         }
 
-        // 2. Token Injection
+        // 2. Token Injection & LBS
         const header = options.header || {};
         const token = wx.getStorageSync('token');
         if (token) {
             header['Authorization'] = `Bearer ${token}`;
         }
 
+        // Auto-inject Mock GPS for Neighborhood LBS
+        // In real app: wx.getLocation()
+        const mockLat = '31.2304';
+        const mockLong = '121.4737';
+
+        let url = options.url.startsWith('http') ? options.url : BASE_URL + options.url;
+        if (options.method === 'GET' && !url.includes('lat=')) {
+            const separator = url.includes('?') ? '&' : '?';
+            url += `${separator}lat=${mockLat}&long=${mockLong}`;
+        }
+
         // 3. Network Request
         wx.request({
-            url: options.url.startsWith('http') ? options.url : BASE_URL + options.url,
+            url: url,
             method: options.method || 'GET',
             data: options.data || {},
             header: header,
