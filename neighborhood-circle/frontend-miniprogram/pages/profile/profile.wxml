@@ -1,0 +1,22 @@
+<view class="container">
+  <view class="user-header">
+    <block wx:if="{{hasUserInfo}}">
+      <image class="avatar" src="{{userInfo.avatar_url || userInfo.avatarUrl}}"></image>
+      <text class="nickname">{{userInfo.nickname || userInfo.nickName}}</text>
+    </block>
+    <block wx:else>
+      <button class="btn-login" bindtap="handleLogin">Login with WeChat</button>
+    </block>
+  </view>
+
+  <view class="menu-list" wx:if="{{hasUserInfo}}">
+    <view class="menu-item">
+      <text>My Mock Balance</text>
+      <text class="balance">¥{{userInfo.balance || '0.00'}}</text>
+    </view>
+    <view class="menu-item arrow">My Tasks</view>
+    <view class="menu-item arrow">My Applications</view>
+    
+    <button class="btn-logout" bindtap="handleLogout">Logout</button>
+  </view>
+</view>

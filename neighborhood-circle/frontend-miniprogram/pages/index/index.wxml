@@ -1,0 +1,23 @@
+<view class="container">
+  <block wx:if="{{loading}}">
+    <view class="loading">Loading...</view>
+  </block>
+  <block wx:else>
+    <view class="task-list">
+      <view class="task-item" wx:for="{{tasks}}" wx:key="id" bindtap="goToDetail" data-id="{{item.id}}">
+        <view class="task-header">
+          <text class="task-title">{{item.title}}</text>
+          <text class="task-price">¥{{item.price}}</text>
+        </view>
+        <view class="task-desc">{{item.description}}</view>
+        <view class="task-footer">
+          <image class="avatar" src="{{item.creator.avatar_url}}"></image>
+          <text class="nickname">{{item.creator.nickname}}</text>
+          <text class="status tag-{{item.status}}">{{item.status}}</text>
+        </view>
+      </view>
+    </view>
+  </block>
+  
+  <view class="floating-btn" bindtap="goToCreate">+</view>
+</view>

@@ -1,0 +1,20 @@
+<view class="container">
+  <block wx:if="{{task}}">
+    <view class="card">
+      <view class="title">{{task.title}}</view>
+      <view class="price">¥{{task.price}}</view>
+      <view class="meta">
+        <text>Created at: {{task.created_at}}</text>
+        <text>Status: {{task.status}}</text>
+      </view>
+      <view class="desc">{{task.description}}</view>
+    </view>
+
+    <view class="creator card">
+      <image class="avatar" src="{{task.creator.avatar_url}}"></image>
+      <text>{{task.creator.nickname}}</text>
+    </view>
+
+    <button class="btn-primary" bindtap="claimTask" wx:if="{{task.status === 'pending'}}">Claim Task</button>
+  </block>
+</view>

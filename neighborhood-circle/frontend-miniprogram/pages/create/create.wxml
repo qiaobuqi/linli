@@ -1,0 +1,18 @@
+<view class="container">
+  <view class="form-group">
+    <view class="label">Title</view>
+    <input class="input" placeholder="Task Title" data-field="title" bindinput="handleInput" />
+  </view>
+  
+  <view class="form-group">
+    <view class="label">Price (¥)</view>
+    <input class="input" type="digit" placeholder="0.00" data-field="price" bindinput="handleInput" />
+  </view>
+
+  <view class="form-group">
+    <view class="label">Description</view>
+    <textarea class="textarea" placeholder="Describe your task..." data-field="description" bindinput="handleInput"></textarea>
+  </view>
+
+  <button class="btn-submit" bindtap="submitForm">Post Task</button>
+</view>
