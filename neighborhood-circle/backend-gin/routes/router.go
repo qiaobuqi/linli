@@ -1,10 +1,11 @@
 package routes
 
 import (
-	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 	"neighborhood-circle/handlers"
 	"neighborhood-circle/middlewares"
+
+	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
 func SetupRouter(db *gorm.DB) *gin.Engine {
@@ -18,7 +19,7 @@ func SetupRouter(db *gorm.DB) *gin.Engine {
 	r.Static("/static", "./web")
 	r.StaticFile("/", "./web/index.html")
 	r.StaticFile("/index.html", "./web/index.html")
-	
+
 	// 健康检查
 	r.GET("/health", func(c *gin.Context) {
 		c.String(200, "healthy")
@@ -35,7 +36,7 @@ func SetupRouter(db *gorm.DB) *gin.Engine {
 
 		// Public Routes
 		v1.GET("/leaderboard", userHandler.GetLeaderboard)
-		
+
 		// Protected Routes
 		protected := v1.Group("/")
 		protected.Use(middlewares.JWTAuth())
@@ -47,7 +48,7 @@ func SetupRouter(db *gorm.DB) *gin.Engine {
 				tasks.GET("", taskHandler.GetTasks)
 				tasks.GET("/:id", taskHandler.GetTaskDetail)
 			}
-			
+
 			// User Routes
 			protected.GET("/user/profile", userHandler.GetUserProfile)
 		}
