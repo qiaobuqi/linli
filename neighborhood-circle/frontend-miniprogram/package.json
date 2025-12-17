@@ -1,0 +1,20 @@
+{
+  "name": "neighborhood-circle-miniprogram",
+  "version": "1.0.0",
+  "description": "邻里圈小程序",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "wechat",
+    "miniprogram",
+    "neighborhood"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@babel/runtime": "^7.23.0"
+  }
+}
+
