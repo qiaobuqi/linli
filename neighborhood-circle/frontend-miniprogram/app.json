@@ -7,34 +7,39 @@
     ],
     "window": {
         "backgroundTextStyle": "light",
-        "navigationBarBackgroundColor": "#fff",
-        "navigationBarTitleText": "Neighborhood Circle",
-        "navigationBarTextStyle": "black"
+        "navigationBarBackgroundColor": "#ffffff",
+        "navigationBarTitleText": "邻里圈",
+        "navigationBarTextStyle": "black",
+        "backgroundColor": "#f5f7fa",
+        "enablePullDownRefresh": true
     },
     "tabBar": {
-        "color": "#999999",
-        "selectedColor": "#07c160",
+        "color": "#8a8a8a",
+        "selectedColor": "#FF6B35",
         "backgroundColor": "#ffffff",
+        "borderStyle": "white",
         "list": [
             {
                 "pagePath": "pages/index/index",
-                "text": "Home",
+                "text": "首页",
                 "iconPath": "",
                 "selectedIconPath": ""
             },
             {
                 "pagePath": "pages/create/create",
-                "text": "Post",
+                "text": "发布",
                 "iconPath": "",
                 "selectedIconPath": ""
             },
             {
                 "pagePath": "pages/profile/profile",
-                "text": "Me",
+                "text": "我的",
                 "iconPath": "",
                 "selectedIconPath": ""
             }
         ]
     },
-    "sitemapLocation": "sitemap.json"
+    "style": "v2",
+    "sitemapLocation": "sitemap.json",
+    "lazyCodeLoading": "requiredComponents"
 }

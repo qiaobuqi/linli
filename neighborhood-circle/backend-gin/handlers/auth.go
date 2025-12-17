@@ -1,14 +1,13 @@
 package handlers
 
 import (
-	"encoding/json"
-	"fmt"
 	"net/http"
+
+	"neighborhood-circle/middlewares"
+	"neighborhood-circle/models"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
-	"neighborhood-circle/middlewares"
-	"neighborhood-circle/models"
 )
 
 type AuthHandler struct {

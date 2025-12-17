@@ -1,64 +1,131 @@
 <view class="container">
-  <!-- 1. Location Header -->
-  <view class="location-header">
-    <text class="location-icon">📍</text>
-    <text class="location-text">Sunshine Garden Community</text>
-  </view>
-
-  <!-- 2. Mock Map Area -->
-  <view class="map-area">
-    <view class="map-placeholder">
-       <text>Map View (Interactive)</text>
-       <view class="nearby-pins">
-         <view class="pin" style="top:30%;left:40%">⚡</view>
-         <view class="pin" style="top:50%;left:60%">🛠️</view>
-       </view>
+  <!-- 1. 顶部位置和搜索栏 -->
+  <view class="top-bar">
+    <view class="location-section">
+      <text class="location-icon">📍</text>
+      <text class="location-text">阳光花园小区</text>
+      <text class="location-arrow">›</text>
+    </view>
+    <view class="search-box" bindtap="onSearch">
+      <text class="search-icon">🔍</text>
+      <text class="search-placeholder">搜索小区服务...</text>
     </view>
   </view>
 
-  <!-- 3. Service Categories Grid -->
-  <view class="service-grid">
-    <view class="grid-item">
-      <view class="icon">🏃</view>
-      <text>Express</text>
-    </view>
-    <view class="grid-item">
-      <view class="icon">🛠️</view>
-      <text>Repair</text>
-    </view>
-    <view class="grid-item">
-      <view class="icon">🐶</view>
-      <text>Pet Care</text>
-    </view>
-    <view class="grid-item">
-      <view class="icon">🧹</view>
-      <text>Clean</text>
-    </view>
-  </view>
-
-  <!-- 4. Nearby Tasks List -->
-  <view class="section-title">Nearby Tasks</view>
-  <block wx:if="{{loading}}">
-    <view class="loading">Loading nearby...</view>
-  </block>
-  <block wx:else>
-    <view class="task-list">
-      <view class="task-item" wx:for="{{tasks}}" wx:key="id" bindtap="goToDetail" data-id="{{item.id}}">
-        <view class="task-type tag-{{item.type}}">{{item.type}}</view>
-        <view class="task-content">
-            <view class="task-header">
-            <text class="task-title">{{item.title}}</text>
-            <text class="task-price">¥{{item.price}}</text>
-            </view>
-            <view class="task-meta">
-               <text>{{item.distance || '0.5km'}}</text>
-               <text class="separator">|</text>
-               <text>Lv.{{item.creator.level}} Host</text>
-            </view>
+  <!-- 2. 轮播Banner -->
+  <view class="banner-section">
+    <swiper class="banner-swiper" indicator-dots="{{true}}" autoplay="{{true}}" interval="{{5000}}" circular="{{true}}">
+      <swiper-item wx:for="{{banners}}" wx:key="index">
+        <view class="banner-item banner-{{item.type}}">
+          <view class="banner-content">
+            <text class="banner-title">{{item.title}}</text>
+            <text class="banner-subtitle">{{item.subtitle}}</text>
+          </view>
+          <text class="banner-emoji">{{item.emoji}}</text>
         </view>
+      </swiper-item>
+    </swiper>
+  </view>
+
+  <!-- 3. 服务分类网格 -->
+  <view class="category-section">
+    <view class="category-grid">
+      <view class="category-item" wx:for="{{categories}}" wx:key="type" bindtap="filterByCategory" data-type="{{item.type}}">
+        <view class="category-icon category-{{item.type}}">
+          <text class="icon-emoji">{{item.emoji}}</text>
+        </view>
+        <text class="category-name">{{item.name}}</text>
+        <text class="category-count">{{item.count}}</text>
       </view>
     </view>
-  </block>
+  </view>
+
+  <!-- 4. 热门推荐标签 -->
+  <view class="hot-tags-section">
+    <view class="section-header">
+      <text class="section-icon">🔥</text>
+      <text class="section-title">热门服务</text>
+    </view>
+    <view class="tags-list">
+      <view class="tag-item" wx:for="{{hotTags}}" wx:key="index" bindtap="filterByTag" data-tag="{{item}}">
+        <text>#{{item}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 5. 附近任务列表 -->
+  <view class="tasks-section">
+    <view class="section-header">
+      <text class="section-icon">📍</text>
+      <text class="section-title">附近需求</text>
+      <text class="section-more" bindtap="viewMore">更多 ›</text>
+    </view>
+    
+    <block wx:if="{{loading}}">
+      <view class="loading-container">
+        <view class="loading-spinner"></view>
+        <text class="loading-text">加载中...</text>
+      </view>
+    </block>
+    
+    <block wx:else>
+      <view class="task-list">
+        <view class="task-card" wx:for="{{tasks}}" wx:key="id" bindtap="goToDetail" data-id="{{item.id}}">
+          <!-- 任务类型标签 -->
+          <view class="task-tag task-tag-{{item.type}}">
+            <text class="tag-emoji">{{item.typeEmoji}}</text>
+            <text class="tag-text">{{item.typeName}}</text>
+          </view>
+          
+          <!-- 任务主体内容 -->
+          <view class="task-main">
+            <view class="task-title-row">
+              <text class="task-title">{{item.title}}</text>
+              <view class="task-status" wx:if="{{item.urgency}}">
+                <text class="urgent-badge">急</text>
+              </view>
+            </view>
+            
+            <text class="task-desc">{{item.description}}</text>
+            
+            <!-- 发布者信息 -->
+            <view class="task-creator">
+              <image class="creator-avatar" src="{{item.creator.avatar_url}}" mode="aspectFill"></image>
+              <text class="creator-name">{{item.creator.nickname}}</text>
+              <view class="creator-level">
+                <text class="level-icon">⭐</text>
+                <text class="level-text">Lv.{{item.creator.level}}</text>
+              </view>
+            </view>
+            
+            <!-- 底部信息栏 -->
+            <view class="task-footer">
+              <view class="task-info">
+                <text class="info-item">📍 {{item.distance || '500m'}}</text>
+                <text class="info-separator">·</text>
+                <text class="info-item">👁 {{item.viewCount || 0}}次浏览</text>
+              </view>
+              <view class="task-price-box">
+                <text class="price-symbol">¥</text>
+                <text class="price-amount">{{item.price}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      
+      <!-- 空状态 -->
+      <view class="empty-state" wx:if="{{tasks.length === 0}}">
+        <text class="empty-icon">📭</text>
+        <text class="empty-text">附近暂无需求</text>
+        <text class="empty-hint">成为第一个发布需求的人吧！</text>
+      </view>
+    </block>
+  </view>
   
-  <view class="floating-btn" bindtap="goToCreate">+</view>
+  <!-- 悬浮发布按钮 -->
+  <view class="floating-btn" bindtap="goToCreate">
+    <text class="fab-icon">＋</text>
+    <text class="fab-text">发布</text>
+  </view>
 </view>

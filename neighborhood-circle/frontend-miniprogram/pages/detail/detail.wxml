@@ -1,20 +1,222 @@
 <view class="container">
   <block wx:if="{{task}}">
-    <view class="card">
-      <view class="title">{{task.title}}</view>
-      <view class="price">¥{{task.price}}</view>
-      <view class="meta">
-        <text>Created at: {{task.created_at}}</text>
-        <text>Status: {{task.status}}</text>
+    <!-- 任务状态横幅 -->
+    <view class="status-banner status-{{task.status}}">
+      <text class="status-icon">{{statusConfig[task.status].icon}}</text>
+      <text class="status-text">{{statusConfig[task.status].text}}</text>
+    </view>
+
+    <!-- 任务主体信息 -->
+    <view class="task-header">
+      <view class="task-type-badge badge-{{task.type}}">
+        <text class="badge-emoji">{{task.typeEmoji}}</text>
+        <text class="badge-text">{{task.typeName}}</text>
       </view>
-      <view class="desc">{{task.description}}</view>
+      
+      <view class="task-title-section">
+        <text class="task-title">{{task.title}}</text>
+        <view class="urgent-tag" wx:if="{{task.urgency}}">
+          <text class="urgent-icon">🔥</text>
+          <text class="urgent-text">加急</text>
+        </view>
+      </view>
+
+      <view class="task-price-box">
+        <text class="price-label">报酬</text>
+        <view class="price-value">
+          <text class="price-symbol">¥</text>
+          <text class="price-amount">{{task.price}}</text>
+        </view>
+      </view>
     </view>
 
-    <view class="creator card">
-      <image class="avatar" src="{{task.creator.avatar_url}}"></image>
-      <text>{{task.creator.nickname}}</text>
+    <!-- 任务详情 -->
+    <view class="task-detail">
+      <view class="detail-section">
+        <view class="section-title">
+          <text class="title-icon">📝</text>
+          <text class="title-text">详细描述</text>
+        </view>
+        <text class="detail-desc">{{task.description}}</text>
+      </view>
+
+      <!-- 任务图片 -->
+      <view class="detail-section" wx:if="{{task.images && task.images.length > 0}}">
+        <view class="section-title">
+          <text class="title-icon">📷</text>
+          <text class="title-text">相关图片</text>
+        </view>
+        <view class="images-grid">
+          <image 
+            class="task-image" 
+            wx:for="{{task.images}}" 
+            wx:key="index"
+            src="{{item}}" 
+            mode="aspectFill"
+            bindtap="previewImage"
+            data-url="{{item}}"
+          ></image>
+        </view>
+      </view>
+
+      <!-- 任务信息 -->
+      <view class="detail-section">
+        <view class="section-title">
+          <text class="title-icon">ℹ️</text>
+          <text class="title-text">任务信息</text>
+        </view>
+        <view class="info-list">
+          <view class="info-item">
+            <text class="info-label">📍 位置距离</text>
+            <text class="info-value">{{task.distance || '500m'}}</text>
+          </view>
+          <view class="info-item">
+            <text class="info-label">⏰ 发布时间</text>
+            <text class="info-value">{{task.created_at}}</text>
+          </view>
+          <view class="info-item">
+            <text class="info-label">👁 浏览次数</text>
+            <text class="info-value">{{task.viewCount || 0}}次</text>
+          </view>
+          <view class="info-item">
+            <text class="info-label">💬 接单人数</text>
+            <text class="info-value">{{task.applicantCount || 0}}人</text>
+          </view>
+        </view>
+      </view>
     </view>
 
-    <button class="btn-primary" bindtap="claimTask" wx:if="{{task.status === 'pending'}}">Claim Task</button>
+    <!-- 发布者信息卡片 -->
+    <view class="creator-card">
+      <view class="creator-header">
+        <view class="section-title">
+          <text class="title-icon">👤</text>
+          <text class="title-text">发布者信息</text>
+        </view>
+        <text class="verify-badge" wx:if="{{task.creator.verified}}">✓ 已认证</text>
+      </view>
+
+      <view class="creator-profile">
+        <image class="creator-avatar" src="{{task.creator.avatar_url}}" mode="aspectFill"></image>
+        <view class="creator-info">
+          <view class="creator-name-row">
+            <text class="creator-name">{{task.creator.nickname}}</text>
+            <view class="creator-level">
+              <text class="level-icon">⭐</text>
+              <text class="level-text">Lv.{{task.creator.level || 1}}</text>
+            </view>
+          </view>
+          <view class="creator-stats">
+            <text class="stat-item">信用分 {{task.creator.creditScore || 100}}</text>
+            <text class="stat-separator">·</text>
+            <text class="stat-item">发布 {{task.creator.publishCount || 0}}次</text>
+            <text class="stat-separator">·</text>
+            <text class="stat-item">完成 {{task.creator.completeCount || 0}}次</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 发布者标签 -->
+      <view class="creator-tags" wx:if="{{task.creator.tags && task.creator.tags.length > 0}}">
+        <view class="creator-tag" wx:for="{{task.creator.tags}}" wx:key="index">
+          {{item}}
+        </view>
+      </view>
+
+      <!-- 联系按钮 -->
+      <view class="creator-actions">
+        <button class="btn-contact" open-type="contact">
+          <text class="btn-icon">💬</text>
+          <text class="btn-text">联系TA</text>
+        </button>
+        <button class="btn-profile" bindtap="viewProfile">
+          <text class="btn-icon">👤</text>
+          <text class="btn-text">查看主页</text>
+        </button>
+      </view>
+    </view>
+
+    <!-- 评价区域（如果任务已完成） -->
+    <view class="reviews-section" wx:if="{{task.status === 'completed' && task.reviews && task.reviews.length > 0}}">
+      <view class="section-title">
+        <text class="title-icon">⭐</text>
+        <text class="title-text">服务评价</text>
+      </view>
+      <view class="review-list">
+        <view class="review-item" wx:for="{{task.reviews}}" wx:key="id">
+          <view class="review-header">
+            <image class="reviewer-avatar" src="{{item.avatar}}" mode="aspectFill"></image>
+            <view class="reviewer-info">
+              <text class="reviewer-name">{{item.name}}</text>
+              <view class="review-rating">
+                <text class="star" wx:for="{{[1,2,3,4,5]}}" wx:key="index" wx:for-item="star">
+                  {{star <= item.rating ? '⭐' : '☆'}}
+                </text>
+              </view>
+            </view>
+            <text class="review-time">{{item.time}}</text>
+          </view>
+          <text class="review-content">{{item.content}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 类似需求推荐 -->
+    <view class="similar-section" wx:if="{{similarTasks && similarTasks.length > 0}}">
+      <view class="section-title">
+        <text class="title-icon">🔥</text>
+        <text class="title-text">类似需求</text>
+      </view>
+      <scroll-view class="similar-scroll" scroll-x>
+        <view class="similar-item" wx:for="{{similarTasks}}" wx:key="id" bindtap="viewTask" data-id="{{item.id}}">
+          <view class="similar-type">{{item.typeName}}</view>
+          <text class="similar-title">{{item.title}}</text>
+          <text class="similar-price">¥{{item.price}}</text>
+        </view>
+      </scroll-view>
+    </view>
+
+    <!-- 底部操作栏 -->
+    <view class="bottom-bar">
+      <view class="bar-left">
+        <button class="btn-icon-action" bindtap="toggleCollect">
+          <text class="action-icon">{{collected ? '❤️' : '🤍'}}</text>
+          <text class="action-text">收藏</text>
+        </button>
+        <button class="btn-icon-action" open-type="share">
+          <text class="action-icon">📤</text>
+          <text class="action-text">分享</text>
+        </button>
+      </view>
+      
+      <view class="bar-right">
+        <button 
+          class="btn-primary-action" 
+          bindtap="claimTask" 
+          wx:if="{{task.status === 'pending'}}">
+          <text class="btn-icon">✅</text>
+          <text class="btn-text">我来帮忙</text>
+        </button>
+        <button 
+          class="btn-disabled" 
+          disabled
+          wx:elif="{{task.status === 'claimed'}}">
+          已被接单
+        </button>
+        <button 
+          class="btn-completed" 
+          disabled
+          wx:elif="{{task.status === 'completed'}}">
+          已完成
+        </button>
+      </view>
+    </view>
+
   </block>
+
+  <!-- 加载状态 -->
+  <view class="loading-state" wx:else>
+    <view class="loading-spinner"></view>
+    <text class="loading-text">加载中...</text>
+  </view>
 </view>

@@ -1,14 +1,45 @@
+/* 主容器 */
 .container {
   min-height: 100vh;
-  background-color: #f6f6f6;
+  background: #f5f7fa;
+  padding-bottom: 40rpx;
 }
 
-.user-header {
-  background: #fff;
-  padding: 60rpx 40rpx;
+/* ========== 用户资料卡片 ========== */
+.profile-card {
+  position: relative;
+  height: 420rpx;
+  margin-bottom: 24rpx;
+  overflow: hidden;
+}
+
+.profile-bg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.profile-overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.5) 100%);
+  z-index: 1;
+}
+
+.profile-content {
+  position: relative;
+  z-index: 2;
+  padding: 60rpx 32rpx 32rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
+  color: #ffffff;
+}
+
+.avatar-section {
+  position: relative;
   margin-bottom: 20rpx;
 }
 
@@ -16,39 +47,466 @@
   width: 140rpx;
   height: 140rpx;
   border-radius: 50%;
-  margin-bottom: 20rpx;
-  background-color: #eee;
+  border: 4rpx solid #ffffff;
+  box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.2);
+}
+
+.verify-badge {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 44rpx;
+  height: 44rpx;
+  background: #52c41a;
+  border-radius: 50%;
+  border: 3rpx solid #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.verify-icon {
+  color: #ffffff;
+  font-size: 24rpx;
+  font-weight: bold;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16rpx;
 }
 
 .nickname {
+  font-size: 40rpx;
+  font-weight: bold;
+  margin-right: 16rpx;
+}
+
+.level-badge {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.3);
+  padding: 8rpx 20rpx;
+  border-radius: 24rpx;
+  backdrop-filter: blur(10rpx);
+}
+
+.level-icon {
+  font-size: 24rpx;
+  margin-right: 6rpx;
+}
+
+.level-text {
+  font-size: 24rpx;
+  font-weight: 600;
+}
+
+.user-bio {
+  font-size: 26rpx;
+  color: rgba(255, 255, 255, 0.9);
+  text-align: center;
+}
+
+/* ========== 信用分卡片 ========== */
+.credit-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  margin: 0 32rpx 24rpx;
+  padding: 32rpx;
+  border-radius: 24rpx;
+  box-shadow: 0 8rpx 24rpx rgba(102, 126, 234, 0.3);
+}
+
+.credit-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24rpx;
+}
+
+.credit-title {
+  display: flex;
+  align-items: center;
+}
+
+.title-icon {
+  font-size: 32rpx;
+  margin-right: 12rpx;
+}
+
+.title-text {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.credit-hint {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.credit-score {
+  text-align: center;
+  margin-bottom: 24rpx;
+}
+
+.score-number {
+  font-size: 88rpx;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.score-label {
+  font-size: 32rpx;
+  color: rgba(255, 255, 255, 0.9);
+  margin-left: 8rpx;
+}
+
+.credit-level {
+  text-align: center;
+}
+
+.level-name {
+  font-size: 28rpx;
+  color: #ffffff;
+  margin-bottom: 12rpx;
+  display: block;
+}
+
+.level-bar {
+  height: 12rpx;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 6rpx;
+  overflow: hidden;
+}
+
+.level-progress {
+  height: 100%;
+  background: #ffffff;
+  border-radius: 6rpx;
+  transition: width 0.3s;
+}
+
+/* ========== 数据统计 ========== */
+.stats-section {
+  background: #ffffff;
+  margin: 0 32rpx 24rpx;
+  padding: 32rpx;
+  border-radius: 24rpx;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-number {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #FF6B35;
+  margin-bottom: 8rpx;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.stat-divider {
+  width: 1rpx;
+  height: 60rpx;
+  background: #f0f0f0;
+}
+
+/* ========== 钱包卡片 ========== */
+.wallet-card {
+  background: #ffffff;
+  margin: 0 32rpx 24rpx;
+  padding: 32rpx;
+  border-radius: 24rpx;
+}
+
+.wallet-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24rpx;
+  padding-bottom: 16rpx;
+  border-bottom: 2rpx solid #f0f0f0;
+}
+
+.wallet-title {
+  display: flex;
+  align-items: center;
+}
+
+.wallet-manage {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.balance-info {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 24rpx;
+  padding: 24rpx;
+  background: #f9fafb;
+  border-radius: 16rpx;
+}
+
+.balance-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.balance-label {
+  font-size: 24rpx;
+  color: #999;
+  margin-bottom: 12rpx;
+}
+
+.balance-amount {
   font-size: 36rpx;
   font-weight: bold;
+  color: #FF6B35;
 }
 
-.btn-login {
-  background-color: #07c160;
-  color: #fff;
+.balance-frozen {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #999;
 }
 
-.menu-list {
-  background: #fff;
+.wallet-actions {
+  display: flex;
+  justify-content: space-around;
+}
+
+.wallet-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.wallet-icon {
+  font-size: 48rpx;
+  margin-bottom: 8rpx;
+}
+
+.wallet-text {
+  font-size: 24rpx;
+  color: #666;
+}
+
+/* ========== 成就系统 ========== */
+.achievement-section {
+  background: #ffffff;
+  margin: 0 32rpx 24rpx;
+  padding: 32rpx;
+  border-radius: 24rpx;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24rpx;
+  padding-bottom: 16rpx;
+  border-bottom: 2rpx solid #f0f0f0;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+}
+
+.section-more {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.achievement-scroll {
+  white-space: nowrap;
+}
+
+.achievement-item {
+  display: inline-block;
+  width: 160rpx;
+  padding: 24rpx;
+  margin-right: 16rpx;
+  border-radius: 16rpx;
+  text-align: center;
+  white-space: normal;
+  vertical-align: top;
+}
+
+.achievement-item.unlocked {
+  background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+}
+
+.achievement-item.locked {
+  background: #f5f7fa;
+  opacity: 0.6;
+}
+
+.achievement-icon {
+  font-size: 56rpx;
+  margin-bottom: 12rpx;
+}
+
+.achievement-name {
+  font-size: 24rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8rpx;
+  display: block;
+}
+
+.achievement-desc {
+  font-size: 20rpx;
+  color: #666;
+  display: block;
+}
+
+/* ========== 功能菜单 ========== */
+.menu-section {
+  background: #ffffff;
+  margin: 0 32rpx 24rpx;
+  border-radius: 24rpx;
+  overflow: hidden;
 }
 
 .menu-item {
-  padding: 30rpx 40rpx;
-  border-bottom: 1rpx solid #eee;
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  font-size: 30rpx;
+  padding: 32rpx;
+  border-bottom: 1rpx solid #f0f0f0;
 }
 
-.balance {
-  font-weight: bold;
-  color: #e64340;
+.menu-item:last-child {
+  border-bottom: none;
+}
+
+.menu-left {
+  display: flex;
+  align-items: center;
+}
+
+.menu-icon {
+  font-size: 40rpx;
+  margin-right: 20rpx;
+}
+
+.menu-text {
+  font-size: 28rpx;
+  color: #333;
+}
+
+.menu-arrow {
+  font-size: 40rpx;
+  color: #999;
+}
+
+/* ========== 社区指引 ========== */
+.guide-section {
+  display: flex;
+  justify-content: space-around;
+  margin: 0 32rpx 24rpx;
+}
+
+.guide-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24rpx;
+  background: #ffffff;
+  border-radius: 16rpx;
+  flex: 1;
+  margin: 0 8rpx;
+}
+
+.guide-icon {
+  font-size: 48rpx;
+  margin-bottom: 12rpx;
+}
+
+.guide-text {
+  font-size: 22rpx;
+  color: #666;
+}
+
+/* ========== 退出登录 ========== */
+.logout-section {
+  padding: 0 32rpx;
 }
 
 .btn-logout {
-  margin-top: 40rpx;
-  background-color: #f6f6f6;
-  color: #666;
+  width: 100%;
+  background: #ffffff;
+  color: #ff4d4f;
+  border: none;
+  border-radius: 24rpx;
+  padding: 32rpx;
+  font-size: 28rpx;
+}
+
+/* ========== 未登录状态 ========== */
+.login-prompt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  padding: 60rpx;
+}
+
+.prompt-icon {
+  font-size: 120rpx;
+  margin-bottom: 32rpx;
+}
+
+.prompt-title {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #1a1a1a;
+  margin-bottom: 16rpx;
+}
+
+.prompt-desc {
+  font-size: 26rpx;
+  color: #999;
+  margin-bottom: 60rpx;
+  text-align: center;
+}
+
+.btn-login {
+  background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 48rpx;
+  padding: 32rpx 80rpx;
+  font-size: 30rpx;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 8rpx 24rpx rgba(255, 107, 53, 0.3);
+}
+
+.login-icon {
+  font-size: 36rpx;
+  margin-right: 12rpx;
+}
+
+.login-text {
+  font-weight: 600;
+}
+
+/* ========== 底部占位 ========== */
+.bottom-space {
+  height: 40rpx;
 }

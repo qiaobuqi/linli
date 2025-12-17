@@ -1,25 +1,180 @@
 <view class="container">
-  <view class="form-group">
-    <view class="label">Task Type</view>
-    <picker mode="selector" range="{{types}}" bindchange="handleTypeChange">
-      <view class="picker-input">{{type}}</view>
-    </picker>
+  <!-- 顶部提示 -->
+  <view class="tips-banner">
+    <text class="tips-icon">💡</text>
+    <text class="tips-text">发布需求，让邻居帮你解决问题</text>
   </view>
 
-  <view class="form-group">
-    <view class="label">Title</view>
-    <input class="input" placeholder="Task Title" data-field="title" bindinput="handleInput" />
-  </view>
-  
-  <view class="form-group">
-    <view class="label">Price (¥)</view>
-    <input class="input" type="digit" placeholder="0.00" data-field="price" bindinput="handleInput" />
+  <!-- 服务类型选择 -->
+  <view class="form-section">
+    <view class="section-title">
+      <text class="title-icon">📋</text>
+      <text class="title-text">选择服务类型</text>
+      <text class="required">*</text>
+    </view>
+    
+    <view class="type-grid">
+      <view 
+        class="type-item {{selectedType === item.value ? 'type-active' : ''}}" 
+        wx:for="{{serviceTypes}}" 
+        wx:key="value"
+        bindtap="selectType" 
+        data-type="{{item.value}}">
+        <text class="type-emoji">{{item.emoji}}</text>
+        <text class="type-name">{{item.label}}</text>
+      </view>
+    </view>
   </view>
 
-  <view class="form-group">
-    <view class="label">Description</view>
-    <textarea class="textarea" placeholder="Describe your task..." data-field="description" bindinput="handleInput"></textarea>
+  <!-- 基本信息 -->
+  <view class="form-section">
+    <view class="section-title">
+      <text class="title-icon">✏️</text>
+      <text class="title-text">基本信息</text>
+    </view>
+
+    <view class="form-item">
+      <view class="item-label">
+        <text>标题</text>
+        <text class="required">*</text>
+      </view>
+      <input 
+        class="item-input" 
+        placeholder="{{typePlaceholders[selectedType] || '请简单描述你的需求'}}" 
+        data-field="title" 
+        bindinput="handleInput" 
+        maxlength="30"
+      />
+      <view class="char-count">{{title.length}}/30</view>
+    </view>
+
+    <view class="form-item">
+      <view class="item-label">
+        <text>详细描述</text>
+        <text class="required">*</text>
+      </view>
+      <textarea 
+        class="item-textarea" 
+        placeholder="{{typeDescPlaceholders[selectedType] || '详细描述你的需求，包括时间、地点等信息'}}"
+        data-field="description" 
+        bindinput="handleInput"
+        maxlength="500"
+        auto-height
+      ></textarea>
+      <view class="char-count">{{description.length}}/500</view>
+    </view>
+
+    <!-- 图片上传 -->
+    <view class="form-item">
+      <view class="item-label">
+        <text>相关图片</text>
+        <text class="optional">（选填）</text>
+      </view>
+      <view class="image-upload">
+        <view class="image-item" wx:for="{{images}}" wx:key="index">
+          <image class="uploaded-image" src="{{item}}" mode="aspectFill"></image>
+          <view class="delete-btn" bindtap="deleteImage" data-index="{{index}}">×</view>
+        </view>
+        <view class="upload-btn" bindtap="uploadImage" wx:if="{{images.length < 3}}">
+          <text class="upload-icon">📷</text>
+          <text class="upload-text">上传图片</text>
+        </view>
+      </view>
+      <view class="upload-hint">最多上传3张图片</view>
+    </view>
   </view>
 
-  <button class="btn-submit" bindtap="submitForm">Post Task</button>
+  <!-- 报酬设置 -->
+  <view class="form-section">
+    <view class="section-title">
+      <text class="title-icon">💰</text>
+      <text class="title-text">设置报酬</text>
+    </view>
+
+    <view class="price-options">
+      <view 
+        class="price-quick {{priceMode === 'quick' ? 'active' : ''}}" 
+        bindtap="setPriceMode" 
+        data-mode="quick">
+        快速选择
+      </view>
+      <view 
+        class="price-custom {{priceMode === 'custom' ? 'active' : ''}}" 
+        bindtap="setPriceMode" 
+        data-mode="custom">
+        自定义
+      </view>
+    </view>
+
+    <block wx:if="{{priceMode === 'quick'}}">
+      <view class="price-grid">
+        <view 
+          class="price-tag {{price === item ? 'price-selected' : ''}}" 
+          wx:for="{{quickPrices}}" 
+          wx:key="index"
+          bindtap="selectQuickPrice" 
+          data-price="{{item}}">
+          ¥{{item}}
+        </view>
+      </view>
+    </block>
+
+    <block wx:else>
+      <view class="form-item">
+        <view class="price-input-box">
+          <text class="price-symbol">¥</text>
+          <input 
+            class="price-input" 
+            type="digit" 
+            placeholder="0.00" 
+            data-field="price" 
+            bindinput="handleInput"
+          />
+        </view>
+      </view>
+    </block>
+
+    <view class="price-hint">💡 合理的报酬能更快找到帮手</view>
+  </view>
+
+  <!-- 其他设置 -->
+  <view class="form-section">
+    <view class="section-title">
+      <text class="title-icon">⚙️</text>
+      <text class="title-text">其他设置</text>
+    </view>
+
+    <view class="setting-item" bindtap="toggleUrgency">
+      <view class="setting-left">
+        <text class="setting-icon">🔥</text>
+        <view class="setting-info">
+          <text class="setting-name">加急需求</text>
+          <text class="setting-desc">标记为加急，提高曝光度</text>
+        </view>
+      </view>
+      <switch checked="{{urgency}}" color="#FF6B35"/>
+    </view>
+
+    <view class="setting-item">
+      <view class="setting-left">
+        <text class="setting-icon">📍</text>
+        <view class="setting-info">
+          <text class="setting-name">位置信息</text>
+          <text class="setting-desc">{{location || '点击设置位置'}}</text>
+        </view>
+      </view>
+      <text class="setting-arrow" bindtap="chooseLocation">›</text>
+    </view>
+  </view>
+
+  <!-- 提交按钮 -->
+  <view class="submit-container">
+    <button class="btn-submit" bindtap="submitForm">
+      <text class="btn-text">发布需求</text>
+    </button>
+    <view class="submit-hint">发布即表示同意《邻里圈服务协议》</view>
+  </view>
+
+  <!-- 底部占位 -->
+  <view class="bottom-space"></view>
 </view>
