@@ -21,21 +21,15 @@
         "list": [
             {
                 "pagePath": "pages/index/index",
-                "text": "首页",
-                "iconPath": "",
-                "selectedIconPath": ""
+                "text": "首页"
             },
             {
                 "pagePath": "pages/create/create",
-                "text": "发布",
-                "iconPath": "",
-                "selectedIconPath": ""
+                "text": "发布"
             },
             {
                 "pagePath": "pages/profile/profile",
-                "text": "我的",
-                "iconPath": "",
-                "selectedIconPath": ""
+                "text": "我的"
             }
         ]
     },
