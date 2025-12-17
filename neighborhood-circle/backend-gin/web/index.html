@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="邻里圈 - 社区互助平台，提供代取快递、宠物照顾、顺风车、二手交易等邻里互助服务">
+    <meta name="keywords" content="邻里圈,社区互助,代取快递,宠物照顾,顺风车,二手交易">
+    <title>邻里圈 - 让邻里更有温度</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* 头部 */
+        header {
+            padding: 60px 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .logo {
+            font-size: 64px;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        h1 {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 16px;
+        }
+
+        .subtitle {
+            font-size: 20px;
+            opacity: 0.9;
+            margin-bottom: 40px;
+        }
+
+        .qr-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            background: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: #999;
+            margin-bottom: 12px;
+        }
+
+        .scan-hint {
+            font-size: 16px;
+            color: white;
+        }
+
+        /* 主要内容 */
+        main {
+            background: white;
+            border-radius: 30px 30px 0 0;
+            margin-top: -20px;
+            padding: 60px 20px;
+        }
+
+        .section {
+            margin-bottom: 80px;
+        }
+
+        .section-title {
+            font-size: 36px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 16px;
+            color: #1a1a1a;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 18px;
+            margin-bottom: 50px;
+        }
+
+        /* 服务网格 */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .service-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 40px 30px;
+            border-radius: 20px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+
+        .service-name {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            color: #1a1a1a;
+        }
+
+        .service-desc {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* 特色功能 */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .feature-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            color: #1a1a1a;
+        }
+
+        .feature-text {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        /* 统计数据 */
+        .stats {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 60px 20px;
+            border-radius: 20px;
+            color: white;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .stat-item {
+            padding: 20px;
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        /* 底部 */
+        footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .footer-links {
+            margin: 20px 0;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 32px;
+            }
+
+            .section-title {
+                font-size: 28px;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* API状态 */
+        .api-status {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            z-index: 1000;
+        }
+
+        .status-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+
+        .status-online {
+            background: #52c41a;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+            color: white;
+            padding: 16px 40px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 30px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <!-- API状态 -->
+    <div class="api-status">
+        <span class="status-dot status-online"></span>
+        <span>API 运行中</span>
+    </div>
+
+    <!-- 头部 -->
+    <header>
+        <div class="container">
+            <div class="logo">🏘️</div>
+            <h1>邻里圈</h1>
+            <p class="subtitle">让邻里更有温度的互助平台</p>
+            
+            <div class="qr-section">
+                <div class="qr-code">
+                    小程序二维码区域<br>
+                    敬请期待
+                </div>
+                <div class="scan-hint">📱 微信扫码体验小程序</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主要内容 -->
+    <main>
+        <div class="container">
+            <!-- 服务介绍 -->
+            <section class="section">
+                <h2 class="section-title">🎯 八大核心服务</h2>
+                <p class="section-subtitle">覆盖社区生活方方面面，让邻里互助触手可及</p>
+                
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">📦</div>
+                        <div class="service-name">代取快递</div>
+                        <div class="service-desc">上班忙？让邻居帮忙代取快递，方便又放心</div>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">🐕</div>
+                        <div class="service-name">宠物照顾</div>
+                        <div class="service-desc">遛狗寄养，专业宠物达人就在你身边</div>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">🚗</div>
+                        <div class="service-name">顺风车</div>
+                        <div class="service-desc">上下班同路？拼车出行，环保省钱</div>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">♻️</div>
+                        <div class="service-name">二手市场</div>
+                        <div class="service-desc">闲置物品交换，让资源循环利用</div>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">🔧</div>
+                        <div class="service-name">维修服务</div>
+                        <div class="service-desc">水电维修、家电安装，邻里巧手来帮忙</div>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">🧹</div>
+                        <div class="service-name">保洁服务</div>
+                        <div class="service-desc">大扫除需要帮手？邻居协助更放心</div>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">🍜</div>
+                        <div class="service-name">美食分享</div>
+                        <div class="service-desc">拼团购物、美食分享，邻里共享美好</div>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">💡</div>
+                        <div class="service-name">其他帮助</div>
+                        <div class="service-desc">借梯子、辅导作业...邻里互助无处不在</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 特色功能 -->
+            <section class="section">
+                <h2 class="section-title">✨ 平台特色</h2>
+                <p class="section-subtitle">安全、便捷、有温度的社区互助体验</p>
+                
+                <div class="features">
+                    <div class="feature-item">
+                        <div class="feature-icon">🛡️</div>
+                        <div class="feature-title">信用体系</div>
+                        <div class="feature-text">完善的信用评分系统，每次互助都有记录，让信任看得见</div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">⭐</div>
+                        <div class="feature-title">成就系统</div>
+                        <div class="feature-text">热心邻居、任务达人、社区之星...每次帮助都会被记住</div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">📍</div>
+                        <div class="feature-title">LBS定位</div>
+                        <div class="feature-text">基于地理位置，找到离你最近的邻居和服务</div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">💰</div>
+                        <div class="feature-title">灵活报酬</div>
+                        <div class="feature-text">自由设置报酬，邻里互助也可以获得合理回报</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 统计数据 -->
+            <section class="section">
+                <div class="stats">
+                    <h2 class="section-title" style="color: white;">📊 平台数据</h2>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-number">500+</div>
+                            <div class="stat-label">注册用户</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">1000+</div>
+                            <div class="stat-label">发布任务</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">800+</div>
+                            <div class="stat-label">完成互助</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">98%</div>
+                            <div class="stat-label">好评率</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CTA -->
+            <section class="section" style="text-align: center;">
+                <h2 class="section-title">🚀 立即开始</h2>
+                <p class="section-subtitle">扫描上方二维码，加入你的邻里圈</p>
+                <a href="#" class="cta-button">了解更多</a>
+            </section>
+        </div>
+    </main>
+
+    <!-- 底部 -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 邻里圈 Neighborhood Circle. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="/api/v1/tasks">API文档</a>
+                <a href="https://github.com">开源项目</a>
+                <a href="#">用户协议</a>
+                <a href="#">隐私政策</a>
+            </div>
+            <p style="opacity: 0.6; margin-top: 20px; font-size: 14px;">
+                🏠 让邻里更有温度 · 社区互助从这里开始
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // 检查API状态
+        async function checkApiStatus() {
+            try {
+                const response = await fetch('/health');
+                if (response.ok) {
+                    document.querySelector('.api-status span:last-child').textContent = 'API 运行正常';
+                }
+            } catch (error) {
+                document.querySelector('.api-status span:last-child').textContent = 'API 连接中...';
+            }
+        }
+
+        checkApiStatus();
+        setInterval(checkApiStatus, 30000); // 每30秒检查一次
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+

@@ -14,6 +14,16 @@ func SetupRouter(db *gorm.DB) *gin.Engine {
 	taskHandler := &handlers.TaskHandler{DB: db}
 	userHandler := &handlers.UserHandler{DB: db}
 
+	// 静态文件服务 (H5介绍页面)
+	r.Static("/static", "./web")
+	r.StaticFile("/", "./web/index.html")
+	r.StaticFile("/index.html", "./web/index.html")
+	
+	// 健康检查
+	r.GET("/health", func(c *gin.Context) {
+		c.String(200, "healthy")
+	})
+
 	// API V1 Group
 	v1 := r.Group("/api/v1")
 	{
