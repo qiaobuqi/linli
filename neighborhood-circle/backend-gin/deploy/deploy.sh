@@ -134,6 +134,32 @@ build_application() {
     fi
 }
 
+# 部署web静态文件
+deploy_web_files() {
+    echo ""
+    echo "🌐 部署web静态文件..."
+    
+    # 检查源web目录是否存在
+    if [ ! -d "$SOURCE_DIR/web" ]; then
+        echo "⚠️  源web目录不存在，跳过web文件部署"
+        return 0
+    fi
+    
+    # 创建web目录
+    mkdir -p $APP_DIR/web
+    
+    # 复制web静态文件
+    echo "复制web静态文件..."
+    cp -rf $SOURCE_DIR/web/* $APP_DIR/web/
+    
+    # 设置web文件权限
+    chown -R appuser:appuser $APP_DIR/web
+    find $APP_DIR/web -type f -exec chmod 644 {} \;
+    find $APP_DIR/web -type d -exec chmod 755 {} \;
+    
+    echo "✅ web静态文件部署完成"
+}
+
 # 部署配置文件
 deploy_configs() {
     echo ""
@@ -536,6 +562,7 @@ main() {
             create_directories
             build_application
             deploy_configs
+            deploy_web_files
             setup_systemd
             setup_nginx
             verify_database
@@ -548,6 +575,7 @@ main() {
             check_root
             build_application
             deploy_configs
+            deploy_web_files
             systemctl restart $SERVICE_NAME
             systemctl reload nginx
             health_check
