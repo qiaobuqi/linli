@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:8430/api/v1'; // Local Dev Backend (开发环境)
+const BASE_URL = 'http://wx.cnirv.com/api/v1'; // Local Dev Backend (开发环境)
 
 export const request = (options) => {
     return new Promise((resolve, reject) => {
