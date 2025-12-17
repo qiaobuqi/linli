@@ -122,7 +122,7 @@ Page({
             success: (res) => {
                 const tempFilePaths = res.tempFilePaths;
                 this.setData({
-                    images: [...this.data.images, ...tempFilePaths]
+                    images: this.data.images.concat(tempFilePaths)
                 });
                 
                 // TODO: 实际项目中需要上传到服务器

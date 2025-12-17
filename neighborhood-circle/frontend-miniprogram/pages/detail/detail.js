@@ -49,11 +49,10 @@ Page({
             const taskType = typeMap[res.type] || typeMap.other;
             
             this.setData({
-                task: {
-                    ...res,
+                task: Object.assign({}, res, {
                     typeEmoji: taskType.emoji,
                     typeName: taskType.name
-                },
+                }),
                 loading: false
             });
             
@@ -91,8 +90,7 @@ Page({
                 other: '其他帮助'
             };
             
-            const tasks = res.map(task => ({
-                ...task,
+            const tasks = res.map(task => Object.assign({}, task, {
                 typeName: typeMap[task.type] || typeMap.other
             }));
             

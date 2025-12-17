@@ -1,12 +1,16 @@
-const BASE_URL = 'http://wx.cnirv.com/api/v1'; // Local Dev Backend (开发环境)
+const BASE_URL = 'https://wx.cnirv.com/api/v1'; // Local Dev Backend (开发环境)
 
 export const request = (options) => {
     return new Promise((resolve, reject) => {
         // Token Injection & LBS
         const header = options.header || {};
-        const token = wx.getStorageSync('token');
-        if (token) {
-            header['Authorization'] = `Bearer ${token}`;
+        
+        // 如果不是noAuth请求，则添加token
+        if (!options.noAuth) {
+            const token = wx.getStorageSync('token');
+            if (token) {
+                header['Authorization'] = `Bearer ${token}`;
+            }
         }
 
         // Auto-inject Mock GPS for Neighborhood LBS

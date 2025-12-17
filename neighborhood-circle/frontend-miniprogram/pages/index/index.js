@@ -51,11 +51,10 @@ Page({
             const tasksWithMeta = res.map(task => {
                 const category = this.data.categories.find(cat => cat.type === task.type) || 
                                 this.data.categories.find(cat => cat.type === 'other');
-                return {
-                    ...task,
+                return Object.assign({}, task, {
                     typeEmoji: category.emoji,
                     typeName: category.name
-                };
+                });
             });
             
             this.setData({
